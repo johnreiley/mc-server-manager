@@ -1,6 +1,6 @@
 const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
 // const baseUrl = 'http://localhost:5000/api/';
-// import viewUi from './viewUi.js';
+import viewUi from './viewUi.js';
 const ui = new viewUi();
 const serverStatus = {
   running: 'RUNNING',
