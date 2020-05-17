@@ -17,7 +17,7 @@
   --darkgray: rgb(94, 94, 94);
   --gray: rgb(122, 122, 122);
   --lightgray: rgb(173, 173, 173);
-  --primary-color: rgb(26, 147, 247);
+  --primary-color: rgb(20, 228, 37);
   --secondary-color: rgb(18, 212, 147);
   --nav-bg-color: white;
   --primary-bg-color: rgb(245, 245, 245);
@@ -80,9 +80,29 @@ textarea {
 
 /******** CONTENT ********/
 .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: auto;
+  height: 100vh;
+  width: 100vw;
+}
+
+.content-wrapper {
   padding: 10px;
   max-width: 800px;
+  min-width: 250px;
+  margin: 1em 1em 200px 1em;
+  background-color: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.055);
+          box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.055);
 }
 
 @media only screen and (min-width: 500px) {
@@ -114,10 +134,10 @@ textarea {
   position: fixed;
   top: 40vh;
   left: 50vw;
-  height: 80px;
-  width: 80px;
-  margin-left: -40px;
-  margin-top: -40px;
+  height: 100px;
+  width: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
   -webkit-animation: spin 1s infinite linear;
           animation: spin 1s infinite linear;
 }
@@ -145,6 +165,7 @@ textarea {
   background-color: var(--overlay-bg-color);
   position: fixed;
   top: 0;
+  left: 0;
   height: 100vh;
   width: 100vw;
 }
@@ -172,10 +193,6 @@ textarea {
 }
 
 /******** NAVIGATION ********/
-body {
-  padding: 0 0 60px 0;
-}
-
 header {
   position: relative;
   z-index: 10;
@@ -577,7 +594,7 @@ nav #menu-dark-overlay {
   width: calc(100% - 76px);
 }
 
-.setting .toggle {
+.toggle {
   -webkit-transition: background-color 0.3s, border-color 0.3s;
   transition: background-color 0.3s, border-color 0.3s;
   border: solid 3px var(--primary-bg-color);
@@ -590,7 +607,7 @@ nav #menu-dark-overlay {
   padding: 0;
 }
 
-.setting .toggle .circle {
+.toggle .circle {
   -webkit-transition: -webkit-transform 0.3s;
   transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
@@ -604,17 +621,17 @@ nav #menu-dark-overlay {
           box-shadow: var(--med-shadow);
 }
 
-.setting .toggle .circle-on {
+.toggle .circle-on {
   -webkit-transform: translateX(30px);
           transform: translateX(30px);
 }
 
-.setting .toggle-on {
+.toggle-on {
   border: solid 3px var(--primary-color);
   background-color: var(--primary-color);
 }
 
-.setting button {
+button {
   height: 34px;
   line-height: 17px;
   margin: 0;
@@ -1127,9 +1144,6 @@ textarea:focus {
 /************ COLORS *************/
 /****************************************** WIDE SCREENS **************************************************/
 @media only screen and (min-width: 500px) {
-  body {
-    padding: 0 0 0 80px;
-  }
   nav {
     padding: 0;
     display: -webkit-box;

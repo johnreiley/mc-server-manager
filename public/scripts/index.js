@@ -1,5 +1,7 @@
-const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
-// const baseUrl = 'http://localhost:5000/api/';
+// const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
+import viewUi from './viewUi.js';
+const ui = new viewUi();
+const baseUrl = 'http://localhost:5000/api/';
 const serverStatus = {
   running: 'RUNNING',
   staging: 'STAGING',
@@ -10,77 +12,97 @@ const serverStatus = {
 
 init();
 
-function init() {
-  refreshPage();
+async function init() {
+  let optionsWrapper = document.querySelector('#options-wrapper');
+  let toggleContainer = document.createElement('div');
+  let status = await getServerStatus();
+  let simpleStatus = getServerStatusSimple(status);
+  console.log(simpleStatus);
+  toggleContainer.innerHTML = `
+    <div class="toggle ${simpleStatus ? 'toggle-on' : ''}" id="server-toggle">
+      <div class="circle ${simpleStatus ? 'circle-on' : ''}"></div>
+    </div>`
+  optionsWrapper.appendChild(toggleContainer);
+  setToggleListner();
+  await refreshPage();
+  ui.fadeLoadingSpinner();
+
   setInterval(() => {
     refreshPage();
   }, 30000);
 }
 
 async function refreshPage() {
-  let startButton = document.querySelector('#start-btn');
-  let stopButton = document.querySelector('#stop-btn');
-  let buttonContainer = document.querySelector('#button-container');
-  let serverStatusText = document.querySelector('#server-status');
+  let serverToggle = document.querySelector('#server-toggle');
 
   let status = await getServerStatus();
-  serverStatusText.innerText = status;
-  switch (status) {
-    case 'RUNNING':
-    case 'PROVISIONING':
-    case 'STAGING':
-      startButton.style.display = 'none';
-      stopButton.style.display = 'block';
-      break;
-    case 'STOPPING':
-    case 'TERMINATED':
-    default:
-      startButton.style.display = 'block';
-      stopButton.style.display = 'none';
-      break;
+  status = getServerStatusSimple(status);
+  if (status) {
+    updateServerStatusText('Running');
+  } else {
+    updateServerStatusText('Off');
+  }
+  if (status) {
+    if (!serverToggle.classList.contains('toggle-on'))
+      serverToggle.classList.add('toggle-on');
+    if (!serverToggle.firstElementChild.classList.contains('circle-on'))
+      serverToggle.firstElementChild.classList.add('circle-on');
+  } else {
+    serverToggle.classList.remove('toggle-on');
+    serverToggle.firstElementChild.classList.remove('circle-on');
   }
 }
 
-// function createStartButton() {
-//   let button = document.createElement('button');
-//   button.innerText = 'Start Server';
-//   button.classList.add('btn');
-//   button.classList.add('btn-primary');
-//   button.id = 'start-btn';
-//   button.onclick = startServer;
-//   return button;
-// }
+function setToggleListner() {
+  let serverToggle = document.querySelector('#server-toggle');
+  serverToggle.ontouchend = (e) => {
+    e.preventDefault();
+    if (serverToggle.classList.contains('toggle-on')) {
+      serverToggle.classList.remove('toggle-on');
+      serverToggle.firstElementChild.classList.remove('circle-on');
+      updateServerStatusText('Shutting down');
+      stopServer();
+    } else {
+      serverToggle.classList.add('toggle-on');
+      serverToggle.firstElementChild.classList.add('circle-on');
+      updateServerStatusText('Starting up');
+      startServer();
+    }
+  }
+}
 
-// function createStopButton() {
-//   let button = document.createElement('button');
-//   button.innerText = 'Stop Server';
-//   button.classList.add('btn');
-//   button.classList.add('btn-primary');
-//   button.id = 'stop-btn';
-//   button.onclick = stopServer;
-//   return button;
-// }
+function updateServerStatusText(text) {
+  document.querySelector('#server-status').innerText = text;
+}
 
 function startServer() {
+  ui.toggleLoadingSpinner();
   fetch(baseUrl + 'start-server', {
       mode: 'same-origin'
     })
     .then(res => res.json())
     .then((res) => {
       console.log('Starting the server...');
-      setTimeout(refreshPage, 5000);
+      setTimeout(async () => {
+        await refreshPage();
+        ui.fadeLoadingSpinner();
+      }, 10000);
     })
     .catch(err => console.log(err))
 }
 
 function stopServer() {
+  ui.toggleLoadingSpinner();
   fetch(baseUrl + 'stop-server', {
       mode: 'same-origin'
     })
     .then(res => res.json())
     .then((res) => {
       console.log('Stopping the server...');
-      setTimeout(refreshPage, 5000);
+      setTimeout(async () => {
+        await refreshPage();
+        ui.fadeLoadingSpinner();
+      }, 10000);
     })
     .catch(err => console.log(err))
 }
@@ -95,9 +117,25 @@ async function getServerStatus() {
       },
     });
     res = await res.json();
-    return res.status;
+    return await res.status;
   } catch (err) {
     return 'ERROR';
   }
+}
 
+function getServerStatusSimple(realStatus) {
+  let status = false;
+  switch (realStatus) {
+    case 'RUNNING':
+    case 'PROVISIONING':
+    case 'STAGING':
+      status = true;
+      break;
+    case 'STOPPING':
+    case 'TERMINATED':
+    default:
+      status = false;
+      break;
+  }
+  return status;
 }

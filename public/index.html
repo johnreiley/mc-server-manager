@@ -12,44 +12,50 @@
       animation: fadein 0.5s;
     }
 
-    body {
-      padding: 1em;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    h1 {
+    h2 {
       text-align: center;
     }
 
-    div {
-      padding: 1em;
+    .options-container {
+      padding: 0.5em;
       display: flex;
       justify-content: center;
+    }
+
+    #server-status {
+      padding-left: 10px;
     }
   </style>
 </head>
 
 <body>
-  <h1>Minecraft Server Manager</h1>
-  <br>
-  <div>
-    <span>Server Status: </span><span id="server-status">Loading...</span>
+  <div id="loading-overlay">
+    <img src="./resources/loading_circle_2.png" alt="loading circle" id="loadingcircle">
+    <div id="loadingoverlay"></div>
   </div>
-  <div id="button-container">
-    <button 
-      style="display: none;"
-      class="btn btn-primary start-btn" 
-      id="start-btn" 
-      onclick="startServer()">Start the server</button>
-    <button 
-      style="display: none;"
-      class="btn btn-warn stop-btn" 
-      id="stop-btn" 
-      onclick="stopServer()">Stop the server</button>
-  </div>
+
+  <main class="content">
+    <div class="content-wrapper">
+      <h2>Minecraft Server</h2>
+      <div class="options-container">
+        Server Status: <span id="server-status">Loading...</span>
+      </div>
+      <div id="options-wrapper" class="options-container">
+        <!-- <button 
+        style="display: none;"
+        class="btn btn-primary start-btn" 
+        id="start-btn" 
+        onclick="startServer()">Start the server</button>
+        <button 
+        style="display: none;"
+        class="btn btn-warn stop-btn" 
+        id="stop-btn" 
+        onclick="stopServer()">Stop the server</button> -->
+      </div>
+    </div>
+  </main>
 </body>
 
 </html>
 
-<script src="scripts/index.js"></script>
+<script src="scripts/index.js" type="module"></script>
