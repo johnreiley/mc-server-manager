@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <title>MC Server Manager</title>
+
+  <style>
+    .btn {
+      animation: fadein 0.5s;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Minecraft Server Manager</h1>
+  <br>
+  <div>
+    <span>Server Status: </span><span id="server-status">Loading...</span>
+  </div>
+  <div id="button-container">
+    <button 
+      style="display: none;"
+      class="btn btn-primary start-btn" 
+      id="start-btn" 
+      onclick="startServer()">Start the server</button>
+    <button 
+      style="display: none;"
+      class="btn btn-warn stop-btn" 
+      id="stop-btn" 
+      onclick="stopServer()">Stop the server</button>
+  </div>
+</body>
+
+</html>
+
+<script src="scripts/index.js"></script>
