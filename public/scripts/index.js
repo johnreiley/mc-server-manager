@@ -1,5 +1,5 @@
-const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
-// const baseUrl = 'http://localhost:5000/api/';
+// const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
+const baseUrl = 'http://localhost:5000/api/';
 import viewUi from './viewUi.js';
 const ui = new viewUi();
 const serverStatus = {
@@ -51,17 +51,21 @@ async function refreshPage() {
   } else {
     serverToggle.classList.remove('toggle-on');
     serverToggle.firstElementChild.classList.remove('circle-on');
-    imageContainer.classList.add('fade-out');
-    setTimeout(() => {
-      imageContainer.classList.remove('fade-out');
-      imageContainer.style.display = 'none';
-    }, 5000);
+    if (imageContainer.style.display == 'block') {
+      imageContainer.classList.add('fade-out');
+      setTimeout(() => {
+        imageContainer.classList.remove('fade-out');
+        imageContainer.style.display = 'none';
+      }, 5000);
+    }
   }
 }
 
 function setToggleListener() {
+  console.log('set toggle listener')
   let serverToggle = document.querySelector('#server-toggle');
-  serverToggle.ontouchend = (e) => {
+  serverToggle.onclick = (e) => {
+    console.log('touch!')
     e.preventDefault();
     if (serverToggle.classList.contains('toggle-on')) {
       serverToggle.classList.remove('toggle-on');
