@@ -92,13 +92,16 @@ function startServer() {
     })
     .then(res => res.json())
     .then((res) => {
-      console.log('Starting the server...');
       setTimeout(async () => {
         await refreshPage();
         ui.fadeLoadingSpinner();
+        ui.generateToast('Server successfully started', 3000)
       }, 10000);
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      ui.generateToast('Connection failed', 3000)
+      console.log(err)
+    })
 }
 
 function stopServer() {
@@ -108,13 +111,16 @@ function stopServer() {
     })
     .then(res => res.json())
     .then((res) => {
-      console.log('Stopping the server...');
       setTimeout(async () => {
         await refreshPage();
         ui.fadeLoadingSpinner();
+        ui.generateToast('Server successfully shut down', 3000)
       }, 10000);
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      ui.generateToast('Connection failed', 3000)
+      console.log(err)
+    })
 }
 
 async function getServerStatus() {
