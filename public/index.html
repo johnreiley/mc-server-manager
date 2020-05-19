@@ -8,6 +8,20 @@
   <title>MC Server Manager</title>
 
   <style>
+    .background {
+      z-index: -1;
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      animation: oscillate 10s infinite ease-in-out;
+      background-image: url('./resources/minecraft-sky.png');
+      background: url('./resources/minecraft-sky.png') center;
+      transition: opacity 4s;
+    }
+
     .btn {
       animation: fadein 0.5s;
     }
@@ -37,6 +51,7 @@
   </div>
 
   <main class="content">
+    <div class="background" id="image-container"></div>
     <div class="content-wrapper">
       <h2>Minecraft Server</h2>
       <div class="options-container">

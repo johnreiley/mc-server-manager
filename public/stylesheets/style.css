@@ -20,7 +20,7 @@
   --primary-color: rgb(20, 228, 37);
   --secondary-color: rgb(18, 212, 147);
   --nav-bg-color: white;
-  --primary-bg-color: rgb(245, 245, 245);
+  --primary-bg-color: rgb(145, 145, 145);
   --secondary-bg-color: white;
   --primary-font-color: black;
   --secondary-font-color: white;
@@ -80,6 +80,8 @@ textarea {
 
 /******** CONTENT ********/
 .content {
+  z-index: 2;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1223,8 +1225,6 @@ textarea:focus {
 /************ ANIMATIONS *************/
 .fade-out {
   opacity: 0;
-  -webkit-transform: translateY(90px);
-          transform: translateY(90px);
 }
 
 .fade-in {
@@ -1240,6 +1240,41 @@ textarea:focus {
 .slide-in-from-right {
   -webkit-transform: translateX(-100vw);
           transform: translateX(-100vw);
+}
+
+.oscillate {
+  -webkit-animation: oscillate 5s infinite ease-in-out;
+          animation: oscillate 5s infinite ease-in-out;
+}
+
+@-webkit-keyframes oscillate {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes oscillate {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
 @-webkit-keyframes optionbar {
@@ -1288,20 +1323,6 @@ textarea:focus {
     -webkit-transform: scale(0.8);
             transform: scale(0.8);
   }
-  50% {
-    opacity: 1;
-    -webkit-transform: scale(1.005);
-            transform: scale(1.005);
-    -webkit-animation: ease-in-out;
-            animation: ease-in-out;
-  }
-  75% {
-    opacity: 1;
-    -webkit-transform: scale(0.999);
-            transform: scale(0.999);
-    -webkit-animation: ease-in-out;
-            animation: ease-in-out;
-  }
   100% {
     opacity: 1;
     -webkit-transform: scale(1);
@@ -1316,20 +1337,6 @@ textarea:focus {
     opacity: 0;
     -webkit-transform: scale(0.8);
             transform: scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    -webkit-transform: scale(1.005);
-            transform: scale(1.005);
-    -webkit-animation: ease-in-out;
-            animation: ease-in-out;
-  }
-  75% {
-    opacity: 1;
-    -webkit-transform: scale(0.999);
-            transform: scale(0.999);
-    -webkit-animation: ease-in-out;
-            animation: ease-in-out;
   }
   100% {
     opacity: 1;

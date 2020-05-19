@@ -29,7 +29,7 @@
   // --primary-color: rgb(105, 168, 69);
   --secondary-color: rgb(18, 212, 147);
   --nav-bg-color: white;
-  --primary-bg-color: rgb(245, 245, 245);
+  --primary-bg-color: rgb(145, 145, 145);
   --secondary-bg-color: white;
   --primary-font-color: black;
   --secondary-font-color: white;
@@ -89,6 +89,8 @@ textarea {
 
 /******** CONTENT ********/
 .content {
+  z-index: 2;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1092,7 +1094,6 @@ textarea:focus {
 /************ ANIMATIONS *************/
 .fade-out {
   opacity: 0;
-  transform: translateY(90px);
 }
 
 .fade-in {
@@ -1106,6 +1107,22 @@ textarea:focus {
 
 .slide-in-from-right {
   transform: translateX(-100vw);
+}
+
+.oscillate {
+  animation: oscillate 5s infinite ease-in-out;
+}
+
+@keyframes oscillate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes optionbar {
@@ -1133,18 +1150,6 @@ textarea:focus {
     opacity: 0;
     transform: scale(0.8);
     // animation: ease-out;
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.005);
-    animation: ease-in-out;
-  }
-
-  75% {
-    opacity: 1;
-    transform: scale(0.999);
-    animation: ease-in-out;
   }
 
   100% {

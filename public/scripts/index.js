@@ -1,5 +1,5 @@
-const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
-// const baseUrl = 'http://localhost:5000/api/';
+// const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
+const baseUrl = 'http://localhost:5000/api/';
 import viewUi from './viewUi.js';
 const ui = new viewUi();
 const serverStatus = {
@@ -17,13 +17,12 @@ async function init() {
   let toggleContainer = document.createElement('div');
   let status = await getServerStatus();
   let simpleStatus = getServerStatusSimple(status);
-  console.log(simpleStatus);
   toggleContainer.innerHTML = `
     <div class="toggle ${simpleStatus ? 'toggle-on' : ''}" id="server-toggle">
       <div class="circle ${simpleStatus ? 'circle-on' : ''}"></div>
     </div>`
   optionsWrapper.appendChild(toggleContainer);
-  setToggleListner();
+  setToggleListener();
   await refreshPage();
   ui.fadeLoadingSpinner();
 
@@ -34,6 +33,7 @@ async function init() {
 
 async function refreshPage() {
   let serverToggle = document.querySelector('#server-toggle');
+  let imageContainer = document.querySelector('#image-container');
 
   let status = await getServerStatus();
   status = getServerStatusSimple(status);
@@ -43,6 +43,7 @@ async function refreshPage() {
     updateServerStatusText('Off');
   }
   if (status) {
+    imageContainer.style.display = 'block';
     if (!serverToggle.classList.contains('toggle-on'))
       serverToggle.classList.add('toggle-on');
     if (!serverToggle.firstElementChild.classList.contains('circle-on'))
@@ -50,10 +51,15 @@ async function refreshPage() {
   } else {
     serverToggle.classList.remove('toggle-on');
     serverToggle.firstElementChild.classList.remove('circle-on');
+    imageContainer.classList.add('fade-out');
+    setTimeout(() => {
+      imageContainer.classList.remove('fade-out');
+      imageContainer.style.display = 'none';
+    }, 5000);
   }
 }
 
-function setToggleListner() {
+function setToggleListener() {
   let serverToggle = document.querySelector('#server-toggle');
   serverToggle.ontouchend = (e) => {
     e.preventDefault();
