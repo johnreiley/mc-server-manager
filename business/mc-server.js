@@ -7,7 +7,7 @@ if (process.env.COMPUTE_KEY != null) {
   } catch(err) {
     console.error(err)
   }
-  fs.writeFileSync('compute-keys', process.env.COMPUTE_KEY);
+  fs.writeFileSync('compute-keys.json', process.env.COMPUTE_KEY);
   keyPath = 'compute-keys.json';
 } else {
   keyPath = 'C:/Users/super/OneDrive/Documents/Google Cloud/compute-keys.json';
