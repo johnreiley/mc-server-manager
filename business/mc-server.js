@@ -49,7 +49,7 @@ function getServerStatus(req, res) {
       res.status(500).json({error: 'There was an error'});
     }
   })
-  .catch((err) => res.status(400).json({error: err}))
+  .catch((err) => res.status(400).json({error: err, message: 'fail'}))
 }
 
 module.exports = {
