@@ -1,6 +1,7 @@
-const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
-// const baseUrl = 'http://localhost:5000/api/';
+// const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
+const baseUrl = 'http://localhost:5000/api/';
 import viewUi from './viewUi.js';
+import LoginController from './login.js';
 const ui = new viewUi();
 const serverStatus = {
   running: 'RUNNING',
@@ -9,8 +10,17 @@ const serverStatus = {
   stopping: 'STOPPING',
   terminated: 'TERMINATED'
 }
+const loginContainer = document.querySelector('#login');
+const passwordInput = document.querySelector('#password-input');
+const loginBtn = document.querySelector('#login-btn');
+const toggler = document.querySelector('#toggler');
 
-init();
+if (getTokenFromCookie()) {
+  init();
+} else {
+  ui.fadeLoadingSpinner();
+  setLoginListener();
+}
 
 async function init() {
   let optionsWrapper = document.querySelector('#options-wrapper');
@@ -32,31 +42,34 @@ async function init() {
 }
 
 async function refreshPage() {
-  let serverToggle = document.querySelector('#server-toggle');
-  let imageContainer = document.querySelector('#image-container');
+  if (document.querySelector('#toggler').style.display == 'flex') {
 
-  let status = await getServerStatus();
-  status = getServerStatusSimple(status);
-  if (status) {
-    updateServerStatusText('Running');
-  } else {
-    updateServerStatusText('Off');
-  }
-  if (status) {
-    imageContainer.style.display = 'block';
-    if (!serverToggle.classList.contains('toggle-on'))
-      serverToggle.classList.add('toggle-on');
-    if (!serverToggle.firstElementChild.classList.contains('circle-on'))
-      serverToggle.firstElementChild.classList.add('circle-on');
-  } else {
-    serverToggle.classList.remove('toggle-on');
-    serverToggle.firstElementChild.classList.remove('circle-on');
-    if (imageContainer.style.display == 'block') {
-      imageContainer.classList.add('fade-out');
-      setTimeout(() => {
-        imageContainer.classList.remove('fade-out');
-        imageContainer.style.display = 'none';
-      }, 5000);
+    let serverToggle = document.querySelector('#server-toggle');
+    let imageContainer = document.querySelector('#image-container');
+
+    let status = await getServerStatus();
+    status = getServerStatusSimple(status);
+    if (status) {
+      updateServerStatusText('Running');
+    } else {
+      updateServerStatusText('Off');
+    }
+    if (status) {
+      imageContainer.style.display = 'block';
+      if (!serverToggle.classList.contains('toggle-on'))
+        serverToggle.classList.add('toggle-on');
+      if (!serverToggle.firstElementChild.classList.contains('circle-on'))
+        serverToggle.firstElementChild.classList.add('circle-on');
+    } else {
+      serverToggle.classList.remove('toggle-on');
+      serverToggle.firstElementChild.classList.remove('circle-on');
+      if (imageContainer.style.display == 'block') {
+        imageContainer.classList.add('fade-out');
+        setTimeout(() => {
+          imageContainer.classList.remove('fade-out');
+          imageContainer.style.display = 'none';
+        }, 5000);
+      }
     }
   }
 }
@@ -88,7 +101,10 @@ function updateServerStatusText(text) {
 function startServer() {
   ui.toggleLoadingSpinner();
   fetch(baseUrl + 'start-server', {
-      mode: 'same-origin'
+      mode: 'same-origin',
+      headers: {
+        'token': `'${getTokenFromCookie()}'`
+      }
     })
     .then(res => res.json())
     .then((res) => {
@@ -107,7 +123,10 @@ function startServer() {
 function stopServer() {
   ui.toggleLoadingSpinner();
   fetch(baseUrl + 'stop-server', {
-      mode: 'same-origin'
+      mode: 'same-origin',
+      headers: {
+        'token': `'${getTokenFromCookie()}'`
+      }
     })
     .then(res => res.json())
     .then((res) => {
@@ -129,7 +148,8 @@ async function getServerStatus() {
       method: 'GET',
       mode: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': `'${getTokenFromCookie()}'`
       },
     });
     res = await res.json();
@@ -154,4 +174,51 @@ function getServerStatusSimple(realStatus) {
       break;
   }
   return status;
+}
+
+function getTokenFromCookie() {
+  if (document.cookie) {
+    let tokenCookie = document.cookie
+      .split(';')
+      .find(c => c.includes('mc-apikey'));
+    if (tokenCookie) {
+      let token = tokenCookie.split('=')[1];
+      return token;
+    }
+  }
+  return '';
+}
+
+function login() {
+  return fetch(baseUrl + 'login', {
+    method: 'GET',
+    headers: {
+      'password': passwordInput.value
+    }
+  });
+}
+
+function loadPage() {
+  loginContainer.classList.add('slide-out-to-top');
+  toggler.style.display = 'flex';
+}
+
+function setLoginListener() {
+  loginBtn.onclick = loginListener;
+}
+
+async function loginListener(e) {
+  e.preventDefault();
+  if (passwordInput.value != null) {
+    ui.toggleLoadingSpinner();
+    let res = await login();
+    res = await res.json();
+    ui.fadeLoadingSpinner();
+    if (res.success) {
+      document.cookie = `mc-apikey=${res.token}; expires=${new Date(Date.now() + 2592000000).toString()}`
+      loadPage();
+    } else {
+      console.log(res.error);
+    }
+  }
 }

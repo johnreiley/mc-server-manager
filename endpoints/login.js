@@ -1,7 +1,7 @@
-const { login } = require('../business/mc-server.js');
+const { login } = require('../business/login.js');
 var express = require('express');
 var router = express.Router();
 
-router.get('/login', login);
+router.get('/api/login', login);
 
 module.exports = router;

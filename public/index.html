@@ -23,7 +23,12 @@
     }
 
     .login-container {
+      
+    }
+
+    .toggle-container {
       display: none;
+      animation: slide-in-from-bottom 0.5s;
     }
 
     .btn {
@@ -54,11 +59,14 @@
     <div id="loadingoverlay"></div>
   </div>
 
-  <main class="content login-container">
-    <input type="password">
+  <main class="content login-container" id="login">
+    <form>
+      <input class="input-text" type="password" id="password-input" placeholder="password">
+      <button class="btn btn-primary btn-wide" id="login-btn">submit</button>
+    </form>
   </main>
 
-  <main class="content">
+  <main class="content toggle-container" id="toggler">
     <div class="background" id="image-container"></div>
     <div class="content-wrapper">
       <h2>Minecraft Server</h2>

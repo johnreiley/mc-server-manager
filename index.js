@@ -1,4 +1,6 @@
 mcServerEndpoints = require('./endpoints/mc-server.js');
+loginEndpoint = require('./endpoints/login.js');
+authenticate = require('./business/auth');
 const app = require('express');
 const bodyParser = require('body-parser')
 const path = require('path');
@@ -19,5 +21,7 @@ app()
   .use(app.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .use(require('./routes'))
+  .use(authenticate)
+  .use(loginEndpoint)
   .use(mcServerEndpoints)
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));

@@ -59,6 +59,7 @@ body {
   font-family: var(--font);
   font-size: var(--font-size);
   margin: 0;
+  overflow: hidden;
 
   * {
     transition: background-color 0.3s, color 0.5s;
@@ -601,6 +602,10 @@ button {
   box-shadow: var(--item-shadow);
 }
 
+.btn-wide {
+  width: 100%;
+}
+
 .btn:hover {
   filter: brightness(0.95);
 }
@@ -612,8 +617,8 @@ button {
 
 .btn-primary {
   color: white;
-  background-color: var(--primary-color);
-  border: solid 1px var(--primary-color);
+  background-color: rgb(22, 142, 255);
+  border: solid 1px rgb(22, 142, 255);
 }
 
 .btn-secondary {
@@ -648,6 +653,15 @@ form {
   display: flex;
   flex-wrap: wrap;
   // font-weight: lighter;
+  input, textarea {
+    margin: 0;
+    padding: 0;
+    margin: 0.5em 0;
+    font-size: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 
   label {
     padding: 5px 5px 0 5px;
@@ -657,6 +671,16 @@ form {
   .form-txt {
     padding: 5px;
     font-weight: bolder;
+  }
+
+  .input-text {
+    background-color: rgb(255, 255, 255);
+    border: none;
+    height: 20px;
+    width: 100%;
+    border-radius: 7px;
+    padding: 15px;
+    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.11);
   }
 
 }
@@ -674,26 +698,25 @@ form {
 input,
 select,
 textarea {
-  background-color: var(--primary-bg-color);
   font-family: var(--font);
   appearance: none;
   transition: box-shadow 0.1s;
   font-size: var(--font-size);
-  padding: 8px;
-  margin: 5px 5px 5px 5px;
+  // padding: 8px;
+  // margin: 5px 5px 5px 5px;
   border-radius: var(--border-radius);
   border: solid 1px var(--primary-bg-color);
   flex: 1;
   min-width: 80px;
-  min-height: 26px;
+  // min-height: 26px;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border: solid 1px var(--primary-color);
-  box-shadow: var(--input-shadow) var(--primary-color);
+  // border: solid 1px var(--primary-color);
+  // box-shadow: var(--input-shadow) var(--primary-color);
 }
 
 .input-warn {
@@ -1111,6 +1134,20 @@ textarea:focus {
 
 .oscillate {
   animation: oscillate 5s infinite ease-in-out;
+}
+
+.slide-out-to-top {
+  transform: translateY(-100vh);
+  opacity: 0;
+}
+
+@keyframes slide-in-from-bottom {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 @keyframes oscillate {

@@ -49,6 +49,7 @@ body {
   font-family: var(--font);
   font-size: var(--font-size);
   margin: 0;
+  overflow: hidden;
 }
 
 body * {
@@ -700,6 +701,10 @@ button {
           box-shadow: var(--item-shadow);
 }
 
+.btn-wide {
+  width: 100%;
+}
+
 .btn:hover {
   -webkit-filter: brightness(0.95);
           filter: brightness(0.95);
@@ -714,8 +719,8 @@ button {
 
 .btn-primary {
   color: white;
-  background-color: var(--primary-color);
-  border: solid 1px var(--primary-color);
+  background-color: #168eff;
+  border: solid 1px #168eff;
 }
 
 .btn-secondary {
@@ -756,6 +761,16 @@ form {
       flex-wrap: wrap;
 }
 
+form input, form textarea {
+  margin: 0;
+  padding: 0;
+  margin: 0.5em 0;
+  font-size: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 form label {
   padding: 5px 5px 0 5px;
   font-size: 16px;
@@ -764,6 +779,17 @@ form label {
 form .form-txt {
   padding: 5px;
   font-weight: bolder;
+}
+
+form .input-text {
+  background-color: white;
+  border: none;
+  height: 20px;
+  width: 100%;
+  border-radius: 7px;
+  padding: 15px;
+  -webkit-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.11);
+          box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.11);
 }
 
 .break {
@@ -780,7 +806,6 @@ form .form-txt {
 input,
 select,
 textarea {
-  background-color: var(--primary-bg-color);
   font-family: var(--font);
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -790,24 +815,18 @@ textarea {
   transition: box-shadow 0.1s;
   transition: box-shadow 0.1s, -webkit-box-shadow 0.1s;
   font-size: var(--font-size);
-  padding: 8px;
-  margin: 5px 5px 5px 5px;
   border-radius: var(--border-radius);
   border: solid 1px var(--primary-bg-color);
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
   min-width: 80px;
-  min-height: 26px;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border: solid 1px var(--primary-color);
-  -webkit-box-shadow: var(--input-shadow) var(--primary-color);
-          box-shadow: var(--input-shadow) var(--primary-color);
 }
 
 .input-warn {
@@ -1245,6 +1264,34 @@ textarea:focus {
 .oscillate {
   -webkit-animation: oscillate 5s infinite ease-in-out;
           animation: oscillate 5s infinite ease-in-out;
+}
+
+.slide-out-to-top {
+  -webkit-transform: translateY(-100vh);
+          transform: translateY(-100vh);
+  opacity: 0;
+}
+
+@-webkit-keyframes slide-in-from-bottom {
+  0% {
+    -webkit-transform: translateY(100vh);
+            transform: translateY(100vh);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  0% {
+    -webkit-transform: translateY(100vh);
+            transform: translateY(100vh);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
 }
 
 @-webkit-keyframes oscillate {
