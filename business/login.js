@@ -1,6 +1,6 @@
 const generateUuid = require('uuid');
-const PASSWORD = "watermelon";
-const AUTH_TOKEN = "719e36b1-0a33-4f68-8047-017c57c61dba";
+const PASSWORD = process.env["PASSWORD"];
+const AUTH_TOKEN = process.env["AUTH_TOKEN"];
 
 function login(req, res) {
   if (req.headers.password && req.headers.password == PASSWORD) {

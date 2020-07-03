@@ -386,6 +386,12 @@ nav #menu-dark-overlay {
   width: 100vw;
 }
 
+/******** LOGIN ************/
+.login-container {
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
 /******** OPTIONBAR *********/
 .optionbar {
   -webkit-animation: optionbar 0.3s;

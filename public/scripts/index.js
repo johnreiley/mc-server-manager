@@ -1,5 +1,5 @@
-// const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
-const baseUrl = 'http://localhost:5000/api/';
+const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
+// const baseUrl = 'http://localhost:5000/api/';
 import viewUi from './viewUi.js';
 import LoginController from './login.js';
 const ui = new viewUi();
@@ -16,7 +16,7 @@ const loginBtn = document.querySelector('#login-btn');
 const toggler = document.querySelector('#toggler');
 
 if (getTokenFromCookie()) {
-  init();
+  loadPage();
 } else {
   ui.fadeLoadingSpinner();
   setLoginListener();
@@ -149,7 +149,7 @@ async function getServerStatus() {
       mode: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
-        'token': `'${getTokenFromCookie()}'`
+        'token': `${getTokenFromCookie()}`
       },
     });
     res = await res.json();
@@ -200,7 +200,11 @@ function login() {
 
 function loadPage() {
   loginContainer.classList.add('slide-out-to-top');
-  toggler.style.display = 'flex';
+  setTimeout(() => {
+    loginContainer.style.display = 'none';
+    init();
+    toggler.style.display = 'flex';
+  }, 500)
 }
 
 function setLoginListener() {
@@ -213,11 +217,12 @@ async function loginListener(e) {
     ui.toggleLoadingSpinner();
     let res = await login();
     res = await res.json();
-    ui.fadeLoadingSpinner();
     if (res.success) {
       document.cookie = `mc-apikey=${res.token}; expires=${new Date(Date.now() + 2592000000).toString()}`
+      console.log(document.cookie);
       loadPage();
     } else {
+      ui.fadeLoadingSpinner();
       console.log(res.error);
     }
   }

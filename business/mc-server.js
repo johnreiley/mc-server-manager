@@ -1,5 +1,10 @@
 const Compute = require('@google-cloud/compute');
-const keys = 'keys/compute-keys.json';
+let keys;
+if (process.env["COMPUTE_KEY"] != null) {
+  keys = JSON.parse(process.env["COMPUTE_KEY"]);
+} else {
+  keys = 'C:/Users/super/OneDrive/Documents/Google Cloud/compute-keys.json';
+}
 const ZONE = 'us-west3-a';
 const INSTANCE = 'mc-server';
 const compute = new Compute({projectId: 'useful-matter-272420', keyFilename: keys, serviceAccountEmail: 'mc-server-manager@useful-matter-272420.iam.gserviceaccount.com'});

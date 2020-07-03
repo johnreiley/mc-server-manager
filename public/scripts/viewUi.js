@@ -14,12 +14,13 @@ export default class viewUi {
     }
 
     fadeLoadingSpinner() {
+      console.log('fadeLoadingSpinner()')
         if (this.loadingSpinner.style.display = 'block') {
             this.loadingSpinner.classList.add('dissolve');
             setTimeout(() => {
                 this.loadingSpinner.style.display = 'none';
                 this.loadingSpinner.classList.remove('dissolve');
-            }, 300);
+            }, 500);
         }
     }
 
