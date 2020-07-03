@@ -3,4 +3,4 @@
 I build this web app for personal use so that my friends and I could easily toggle our Minecraft server running in Google Cloud on or off.
 
 ## Demo
-<img src="./mc-server-manager.gif" title="demo" />
+![Demo](mc-server-manager.gif)
