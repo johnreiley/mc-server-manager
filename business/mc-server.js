@@ -1,14 +1,20 @@
 const Compute = require('@google-cloud/compute');
-let keys;
-if (process.env["COMPUTE_KEY"] != null) {
-  keys = JSON.parse(process.env["COMPUTE_KEY"]);
-  console.log(keys);
+const fs = require('fs');
+let keyPath;
+if (process.env.COMPUTE_KEY != null) {
+  try {
+    fs.unlinkSync('./compute-keys.json');
+  } catch(err) {
+    console.error(err)
+  }
+  fs.writeFileSync('compute-keys', process.env.COMPUTE_KEY);
+  keyPath = 'compute-keys.json';
 } else {
-  keys = 'C:/Users/super/OneDrive/Documents/Google Cloud/compute-keys.json';
+  keyPath = 'C:/Users/super/OneDrive/Documents/Google Cloud/compute-keys.json';
 }
 const ZONE = 'us-west3-a';
 const INSTANCE = 'mc-server';
-const compute = new Compute({projectId: 'useful-matter-272420', keyFilename: keys, serviceAccountEmail: 'mc-server-manager@useful-matter-272420.iam.gserviceaccount.com'});
+const compute = new Compute({projectId: 'useful-matter-272420', keyFilename: keyPath, serviceAccountEmail: 'mc-server-manager@useful-matter-272420.iam.gserviceaccount.com'});
 const zone = compute.zone(ZONE);
 const vm = zone.vm(INSTANCE);
 
