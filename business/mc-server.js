@@ -39,9 +39,9 @@ function stopServer(req, res) {
 }
 
 function getServerStatus(req, res) {
+  console.log(req.headers);
   vm.get()
   .then((response) => {
-    console.log(response);
     if (response[0].metadata.status) {
       let serverStatus = response[0].metadata.status;
       res.status(200).json({status: serverStatus})
