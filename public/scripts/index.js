@@ -1,5 +1,5 @@
-const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
-// const baseUrl = 'http://localhost:5000/api/';
+// const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
+const baseUrl = 'http://localhost:5000/api/';
 import viewUi from './viewUi.js';
 import LoginController from './login.js';
 const ui = new viewUi();
@@ -103,7 +103,7 @@ function startServer() {
   fetch(baseUrl + 'start-server', {
       mode: 'same-origin',
       headers: {
-        'token': `'${getTokenFromCookie()}'`
+        'token': `${getTokenFromCookie()}`
       }
     })
     .then(res => res.json())
@@ -125,7 +125,7 @@ function stopServer() {
   fetch(baseUrl + 'stop-server', {
       mode: 'same-origin',
       headers: {
-        'token': `'${getTokenFromCookie()}'`
+        'token': `${getTokenFromCookie()}`
       }
     })
     .then(res => res.json())
@@ -223,6 +223,8 @@ async function loginListener(e) {
       loadPage();
     } else {
       ui.fadeLoadingSpinner();
+      passwordInput.value = '';
+      ui.generateToast("Login failed", 3000);
       console.log(res.error);
     }
   }

@@ -128,8 +128,6 @@ textarea {
   transition: opacity 0.3s;
   position: relative;
   z-index: 20;
-  -webkit-animation: fadein 0.3s;
-          animation: fadein 0.3s;
 }
 
 #loading-overlay #loadingcircle {
@@ -384,12 +382,6 @@ nav #menu-dark-overlay {
   left: 0;
   height: 100vh;
   width: 100vw;
-}
-
-/******** LOGIN ************/
-.login-container {
-  -webkit-transition: all 1s;
-  transition: all 1s;
 }
 
 /******** OPTIONBAR *********/
@@ -790,6 +782,7 @@ form .form-txt {
 form .input-text {
   background-color: white;
   border: none;
+  margin: 10px;
   height: 20px;
   width: 100%;
   border-radius: 7px;
