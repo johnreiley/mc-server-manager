@@ -2,6 +2,7 @@ const Compute = require('@google-cloud/compute');
 let keys;
 if (process.env["COMPUTE_KEY"] != null) {
   keys = JSON.parse(process.env["COMPUTE_KEY"]);
+  console.log(keys);
 } else {
   keys = 'C:/Users/super/OneDrive/Documents/Google Cloud/compute-keys.json';
 }
@@ -40,6 +41,7 @@ function stopServer(req, res) {
 function getServerStatus(req, res) {
   vm.get()
   .then((response) => {
+    console.log(response);
     if (response[0].metadata.status) {
       let serverStatus = response[0].metadata.status;
       res.status(200).json({status: serverStatus})

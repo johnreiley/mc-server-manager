@@ -1,5 +1,5 @@
-const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
-// const baseUrl = 'http://localhost:5000/api/';
+// const baseUrl = 'https://mc-server-manager.herokuapp.com/api/';
+const baseUrl = 'http://localhost:5000/api/';
 import viewUi from './viewUi.js';
 import LoginController from './login.js';
 const ui = new viewUi();
