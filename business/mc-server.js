@@ -45,7 +45,6 @@ function stopServer(req, res) {
 }
 
 function getServerStatus(req, res) {
-  console.log(req.headers);
   vm.get()
   .then((response) => {
     if (response[0].metadata.status) {
@@ -55,7 +54,7 @@ function getServerStatus(req, res) {
       res.status(500).json({error: 'There was an error'});
     }
   })
-  .catch((err) => res.status(400).json({error: err, message: 'fail'}))
+  .catch((err) => res.status(400).json({error: err}))
 }
 
 module.exports = {
