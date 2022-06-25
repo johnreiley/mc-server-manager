@@ -17,7 +17,7 @@
     "express": "^4.15.2",
     "firebase": "^7.5.2",
     "firebase-admin": "^8.8.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "pg": "^7.12.1",
     "uuid": "^8.1.0"
   },
